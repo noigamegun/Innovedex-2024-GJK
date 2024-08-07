@@ -20,12 +20,6 @@ sleep 30
 echo "Configure your Ubuntu repositories to allow restricted, universe and multiverse repo. Waiting 10 seconds... Ctrl+C to abort."
 sleep 10
 
-# Request SU Perms. Abort if ran as root.
-if [ "$EUID" -ne 0 ]
-  then echo "Root detected. Aborting..."
-  exit
-fi
-
 echo "Requesting Superuser... Enter your password if prompted."
 sudo
 
