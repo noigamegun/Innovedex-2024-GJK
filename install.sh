@@ -20,9 +20,6 @@ sleep 30
 echo "Configure your Ubuntu repositories to allow restricted, universe and multiverse repo. Waiting 10 seconds... Ctrl+C to abort."
 sleep 10
 
-echo "Requesting Superuser... Enter your password if prompted."
-sudo echo "Done"
-
 # Update apt
 echo "Updating apt repos..."
 sudo apt update
