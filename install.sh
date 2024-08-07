@@ -21,7 +21,7 @@ echo "Configure your Ubuntu repositories to allow restricted, universe and multi
 sleep 10
 
 echo "Requesting Superuser... Enter your password if prompted."
-sudo
+sudo echo "Done"
 
 # Update apt
 echo "Updating apt repos..."
