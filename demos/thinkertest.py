@@ -29,16 +29,31 @@ def move_down():
 
 
 def update_status_number():
-    random_number = random.randint(1, 100)  # Generate a new random number
+
+    random_number = random.randint(1, 100)
+    random_x = random.randint(0, 255)
+    random_y = random.randint(0, 255)
+    random_z = random.randint(0, 255)
+
     le.log("info", "Random Status Number : " + str(random_number), False)
-    status.config(text="Random Status Number : " + str(random_number))  # Update the label text
-    statuswindow.after(1000, update_status_number)  # Schedule this function to be called again after 1 second
+    status.config(text="Random Status Number : " + str(random_number))
+
+    le.log("info", "Random X : " + str(random_x), False)
+    x.config(text="Random X : " + str(random_x))
+
+    le.log("info", "Random Y : " + str(random_y), False)
+    y.config(text="Random Y : " + str(random_y))
+
+    le.log("info", "Random Z : " + str(random_z), False)
+    z.config(text="Random Z : " + str(random_z))
+
+    statuswindow.after(1000, update_status_number)
 
 
 def update_color():
-    random_color ="#" + str("%06x" % random.randint(0, 0xFFFFFF))
+    random_color = "#" + str("%06x" % random.randint(0, 0xFFFFFF))
     le.log("info", "Random Color HEX : " + str(random_color), False)
-    randomcolorwindow.config(bg=(random_color))
+    randomcolorwindow.config(bg=random_color)
     randomcolorwindow.after(100, update_color)
 
 
@@ -53,7 +68,7 @@ root.title("Robot Control Panel")
 statuswindow.title("Status Window")
 randomcolorwindow.title("Color Sensor?")
 
-statuswindow.geometry("300x100")
+# statuswindow.geometry("300x100")
 randomcolorwindow.geometry("200x200")
 
 header = tk.Label(root, text="Robot Control Panel", font=("Arial", 16, "bold"))
@@ -81,8 +96,16 @@ le.log("info", "Started TK", False)
 le.log("info", "TK Load Time: " + str(time.time() - loadtime), False)
 
 status = tk.Label(statuswindow, text="", font=("Arial", 16, "bold"))
-status.grid(row=7, column=1)
+status.grid(row=1, column=0, columnspan=3)
 
+x = tk.Label(statuswindow, text="", font=("Arial", 16, "bold"))
+x.grid(row=2, column=0, columnspan=3)
+
+y = tk.Label(statuswindow, text="", font=("Arial", 16, "bold"))
+y.grid(row=3, column=0, columnspan=3)
+
+z = tk.Label(statuswindow, text="", font=("Arial", 16, "bold"))
+z.grid(row=4, column=0, columnspan=3)
 update_color()
 
 update_status_number()  # Initial call to the function
