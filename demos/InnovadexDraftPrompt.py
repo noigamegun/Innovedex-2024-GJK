@@ -3,7 +3,7 @@ from LoggingEngine import log
 import tkinter as tk
 
 # Declare Vars
-objcount = 5
+objcount = 0
 on = False
 
 # Checks
@@ -11,6 +11,8 @@ if not isinstance(objcount, int):
     log("fatal", "Unknown \"objcount\" value.", True)
 if not isinstance(on, bool):
     log("fatal", "Unknown \"on\" value.", True)
+if objcount < 0:
+    log("fatal", "objcount is less than 0.", True)
 # Declare Funcs
 
 
