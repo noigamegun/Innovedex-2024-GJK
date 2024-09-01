@@ -36,16 +36,35 @@ class MainGui(Node):
             10 
         )
 
+        self.ir_subscriber = self.create_subscription(
+            Bool,
+            'ir_sensor_status',
+            self.ir_callback,
+            10
+        )
+        
+        self.shape_detected = False
+        self.updatecount()
+        
+    def ir_callback(self, msg):
+        # Check what shape is detected and add to count
+        if msg.data == False:
+            self.get_logger().info("IR Sensor Status: Object Detected")
+            self.shape_detected = True
+        
+
     def shape_callback(self, msg):
-        shape = msg.data
-        if shape == "square":
-            self.square_count += 1
-        elif shape == "circle":
-            self.circle_count += 1
-        else :
-            self.get_logger().info(f"Invalid shape: {shape}")
+        if self.shape_detected:
+            shape = msg.data
+            if shape == "square":
+                self.square_count += 1
+            elif shape == "circle":
+                self.circle_count += 1
+            else:
+                self.get_logger().info(f"Invalid shape: {shape}")
             
-        self.get_logger().info(f"Square Count: {self.square_count}, Circle Count: {self.circle_count}")
+            self.get_logger().info(f"Square Count: {self.square_count}, Circle Count: {self.circle_count}")
+            self.shape_detected = False  # Reset the flag after processing
 
     def start(self):
         # Start the robot
@@ -57,13 +76,13 @@ class MainGui(Node):
 
     def updatecount(self):
         # Update the square and circle count labels
-        self.squarecount.config(text="Square Count: " + str(square_count))
-        self.circlecount.config(text="Circle Count: " + str(circle_count))
-        self.root.after(100, updatecount)
+        self.squarecount.config(text="Square Count: " + str(self.square_count))
+        self.circlecount.config(text="Circle Count: " + str(self.circle_count))
+        self.root.after(100, self.updatecount)
 
 
 def main(args=None):
     rclpy.init(args=args)
     main_gui = MainGui()
     main_gui.root.mainloop()
-    rclpy.spin(MainGui())
+    rclpy.spin(main_gui)
