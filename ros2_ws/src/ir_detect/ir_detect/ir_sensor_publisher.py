@@ -16,6 +16,7 @@ class IRSensorPublisher(Node):
     def timer_callback(self):
         sensor_status = self.read_ir_sensor()
         self.publisher_.publish(sensor_status)
+        self.get_logger().info(f"IR Sensor Status: {sensor_status.data}")
 
     def read_ir_sensor(self):
         try:

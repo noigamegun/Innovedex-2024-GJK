@@ -5,10 +5,12 @@ import cv2
 import numpy as np
 
 class ShapeDetector(Node):
+
     def __init__(self):
         super().__init__('shape_detector')
         self.publisher_ = self.create_publisher(String, 'shape_detect', 10)
-        self.cap = cv2.VideoCapture(0)
+        self.cap = cv2.VideoCapture(2)
+        self.get_logger().info('Connected to camera on /dev/video2')
         self.detected_shapes = set()
 
     def detect_shapes(self):
@@ -29,7 +31,7 @@ class ShapeDetector(Node):
                 param1=100, 
                 param2=60, 
                 minRadius=40, 
-                maxRadius=120
+                maxRadius=200
             )
             if circles is not None:
                 circles = np.round(circles[0, :]).astype("int")
